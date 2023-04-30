@@ -1,6 +1,6 @@
 (var :Map<String,Bool> loadedNameFiles (new Map))
 (var :Map<String,Bool> loadedNames (new Map))
-(var libPath (Prelude.libPath "bad-nlp"))
+(var libPath (libPath "bad-nlp"))
 (var namesPath (joinPath libPath "name-database"))
 
 (var :Map<String,Bool> notNames (for notName [
