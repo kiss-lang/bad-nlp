@@ -1,5 +1,6 @@
 -lib yaml
 -lib kiss
+-D no-deprecation-warnings
 -cp src
 --main bad_nlp.Main
 --interp
