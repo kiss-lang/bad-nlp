@@ -4,7 +4,8 @@
 (var namesPath (joinPath libPath "name-database"))
 
 (var :Map<String,Bool> notNames (for notName [
-    "he" // This is in the name database.
+    "no"
+    "he"
     "she"
 ] =>notName true))
 
