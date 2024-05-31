@@ -16,8 +16,11 @@
     "-"
     "!"
     "?"
-    "'s" // possessive
 ])
+
+(var punctuationPlusSome (concat punctuation [
+    "'s" // possessive
+]))
 
 (var delimiters [
     " "
@@ -44,7 +47,7 @@
         ((apply or (for quote quotesAndThings (token.endsWith quote)))
             (normalize (substr token 0 -1) toLower))
         // Remove punctuation after
-        ((apply or (for punct punctuation (token.endsWith punct)))
+        ((apply or (for punct punctuationPlusSome (token.endsWith punct)))
             (normalize (substr token 0 -1) toLower))
         // Lower-case
         (toLower (token.toLowerCase))
