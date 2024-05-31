@@ -1,0 +1,48 @@
+(var :Map<String,Bool> motionVerbs (new Map))
+(var :Map<String,Bool> prepositions (new Map))
+(var :Map<String,Bool> loadedVerbFiles (new Map))
+
+(function loadVerbsForToken [token]
+    (let [fl (token.substr 0 1)
+            ftl (token.substr 0 2)]
+        (unless (loadedVerbFiles.exists "${ftl}.txt")
+            (doFor line (.split
+                            (try (.replace (sys.io.File.getContent "motion-verb-database/${fl}/${ftl}.txt") "\r" "")
+                                (catch [e]
+                                    ""))
+                            "\n")
+                (when line
+                    (dictSet motionVerbs line true)))
+            (dictSet loadedVerbFiles "${ftl}.txt" true))))
+
+(function isMotionVerb [token]
+    (let [token (Util.normalize token true)]
+        (loadVerbsForToken token)
+        (motionVerbs.exists token)))
+
+(function loadPrepositions []
+    (when (= 0 (count prepositions))
+        (doFor prep ["over" "above" "down" "past" "across" "around" "after" "against" "for" "along" "among"
+                        "in" "to" "inside" "into" "toward" "under" "at" "underneath" "before" "near" "close"
+                        "behind" "until" "below" "off" "up" "left" "right" "beneath" "on" "upon" "beside"
+                        "onto" "via" "between" "opposite" "with" "beyond" "out" "within" "by" "outside"]
+            (dictSet prepositions prep true))))
+
+(function isPreposition [token]
+    (loadPrepositions)
+    (prepositions.exists (Util.normalize token true)))
+
+(function findMotionPhrases [:String text]
+    (localVar phrases [])
+    (localVar tokens (Util.splitTokens text))
+    (doFor [idx token] (enumerate tokens)
+        (when (and (isMotionVerb token) (isPreposition (nth tokens (+ idx 1))))
+            (let [rest (.join (tokens.slice idx) " ")
+                    stream (kiss.Stream.fromString rest)]
+                (whenLet [(Some phrase) (stream.takeUntilOneOf Util.punctuation true)]
+                    (phrases.push (phrase.trim))))))
+    phrases)
+
+(function findMotionDestinations [:String text]
+    (for phrase (findMotionPhrases text)
+        (.join (.slice (phrase.split " ") 1) " ")))

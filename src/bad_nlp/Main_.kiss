@@ -15,3 +15,10 @@
 
     (assertEquals 5 .length (Names.findNames "Vanessa, Finn, and Tracy--and George--go to Troy's..."))
 )
+
+(assert Motion.isMotionVerb "go")
+(let [phrases (Motion.findMotionPhrases "They all go to Troy's")]
+    (assert (phrases.contains "go to Troy's")))
+
+(let [dests (Motion.findMotionDestinations "They all go to Troy's")]
+    (assert (dests.contains "to Troy's")))
