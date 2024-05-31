@@ -15,7 +15,7 @@
                     (dictSet motionVerbs line true)))
             (dictSet loadedVerbFiles "${ftl}.txt" true))))
 
-(function isMotionVerb [token]
+(function isMotionVerb [:String token]
     (let [token (Util.normalize token true)]
         (loadVerbsForToken token)
         (motionVerbs.exists token)))
@@ -28,7 +28,7 @@
                         "onto" "via" "between" "opposite" "with" "beyond" "out" "within" "by" "outside"]
             (dictSet prepositions prep true))))
 
-(function isPreposition [token]
+(function isPreposition [:String token]
     (loadPrepositions)
     (prepositions.exists (Util.normalize token true)))
 
