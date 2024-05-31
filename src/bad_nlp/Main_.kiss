@@ -19,6 +19,8 @@
 (assert Motion.isMotionVerb "go")
 (let [phrases (Motion.findMotionPhrases "They all go to Troy's")]
     (assert (phrases.contains "go to Troy's")))
+(let [dests (Motion.findMotionPhrases "he crawls into the opening")]
+    (assert (dests.contains "crawls into the opening")))
 
 (let [dests (Motion.findMotionDestinations "They all go to Troy's")]
     (assert (dests.contains "to Troy's")))
