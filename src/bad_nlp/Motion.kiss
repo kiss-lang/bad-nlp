@@ -2,7 +2,7 @@
 (var :Map<String,Bool> prepositions (new Map))
 (var :Map<String,Bool> loadedVerbFiles (new Map))
 
-(function loadVerbsForToken [token]
+(function loadVerbsForToken [:String token]
     (let [fl (token.substr 0 1)
             ftl (token.substr 0 2)]
         (unless (loadedVerbFiles.exists "${ftl}.txt")
