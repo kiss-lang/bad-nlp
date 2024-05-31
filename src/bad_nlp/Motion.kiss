@@ -7,7 +7,9 @@
             ftl (token.substr 0 2)]
         (unless (loadedVerbFiles.exists "${ftl}.txt")
             (doFor line (.split
-                            (try (.replace (sys.io.File.getContent "motion-verb-database/${fl}/${ftl}.txt") "\r" "")
+
+                            (try (.replace (sys.io.File.getContent
+                                                            (joinPath (libPath "bad-nlp") "motion-verb-database/${fl}/${ftl}.txt")) "\r" "")
                                 (catch [e]
                                     ""))
                             "\n")
