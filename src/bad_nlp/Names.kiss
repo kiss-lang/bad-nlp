@@ -8,6 +8,7 @@
     "he"
     "she"
     "end"
+    "first"
 ] =>notName true))
 
 (var :Map<String,Bool> yesNames (new Map))
